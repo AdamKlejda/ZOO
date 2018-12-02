@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7c04a0ce7ddd40b39f6ecc849d104597" Name="Diagram1">
+        <EntityTypeShape EntityType="ZOOModel.AnimalGroups" Width="1.5" PointX="3" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Animals" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Cleanings" Width="1.5" PointX="3" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Delivery" Width="1.5" PointX="8.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Employees" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Feedings" Width="1.5" PointX="8.25" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.FoodProducts" Width="1.5" PointX="6" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Pavilions" Width="1.5" PointX="0.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ZOOModel.Suppliers" Width="1.5" PointX="6" PointY="8.375" IsExpanded="true" />
+        <AssociationConnector Association="ZOOModel.FK__AnimalGro__Pavil__489AC854" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Animals__AnimalG__498EEC8D" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Feedings__Animal__4E53A1AA" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Cleanings__Emplo__4A8310C6" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Cleanings__Pavil__4B7734FF" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Delivery__FoodPr__4C6B5938" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Delivery__Suppli__4D5F7D71" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Feedings__Employ__4F47C5E3" ManuallyRouted="false" />
+        <AssociationConnector Association="ZOOModel.FK__Feedings__FoodPr__503BEA1C" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

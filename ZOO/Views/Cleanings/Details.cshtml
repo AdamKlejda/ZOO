@@ -1,0 +1,50 @@
+﻿@model ZOO.Models.Cleanings
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cleanings</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CleaningDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CleaningDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TimeForCleaning)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TimeForCleaning)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employees.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employees.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pavilions.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pavilions.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.CleaningId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

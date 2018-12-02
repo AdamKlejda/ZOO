@@ -1,0 +1,661 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ZOOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AnimalGroups">
+          <Key>
+            <PropertyRef Name="AnimalGroupId" />
+          </Key>
+          <Property Name="AnimalGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PavilionId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="AnimalId" />
+          </Key>
+          <Property Name="AnimalId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnimalGroupId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Species" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="BirthDate" Type="date" Nullable="false" />
+          <Property Name="DeathDate" Type="date" />
+          <Property Name="Sex" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Cleanings">
+          <Key>
+            <PropertyRef Name="CleaningId" />
+          </Key>
+          <Property Name="CleaningId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="PavilionId" Type="int" Nullable="false" />
+          <Property Name="CleaningDate" Type="date" Nullable="false" />
+          <Property Name="TimeForCleaning" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SupplierId" Type="int" Nullable="false" />
+          <Property Name="FoodProductsId" Type="int" Nullable="false" />
+          <Property Name="DeliveryDate" Type="date" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Salary" Type="int" Nullable="false" />
+          <Property Name="Position" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Feedings">
+          <Key>
+            <PropertyRef Name="FeedingId" />
+          </Key>
+          <Property Name="FeedingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AnimalGroupId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="FoodProductsId" Type="int" Nullable="false" />
+          <Property Name="TimeForFeeding" Type="int" Nullable="false" />
+          <Property Name="FeedingDate" Type="date" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="FoodProducts">
+          <Key>
+            <PropertyRef Name="FoodProductsId" />
+          </Key>
+          <Property Name="FoodProductsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="ExpiryDate" Type="date" Nullable="false" />
+          <Property Name="Calories" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pavilions">
+          <Key>
+            <PropertyRef Name="PavilionId" />
+          </Key>
+          <Property Name="PavilionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surface" Type="int" />
+          <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="ContactName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Address" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__AnimalGro__Pavil__489AC854">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="PavilionId" />
+            </Principal>
+            <Dependent Role="AnimalGroups">
+              <PropertyRef Name="PavilionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Animals__AnimalG__498EEC8D">
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalGroups">
+              <PropertyRef Name="AnimalGroupId" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="AnimalGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleanings__Emplo__4A8310C6">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Cleanings" Type="Self.Cleanings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Cleanings">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleanings__Pavil__4B7734FF">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="Cleanings" Type="Self.Cleanings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="PavilionId" />
+            </Principal>
+            <Dependent Role="Cleanings">
+              <PropertyRef Name="PavilionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Delivery__FoodPr__4C6B5938">
+          <End Role="FoodProducts" Type="Self.FoodProducts" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodProducts">
+              <PropertyRef Name="FoodProductsId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="FoodProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Delivery__Suppli__4D5F7D71">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__Animal__4E53A1AA">
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalGroups">
+              <PropertyRef Name="AnimalGroupId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="AnimalGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__Employ__4F47C5E3">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__FoodPr__503BEA1C">
+          <End Role="FoodProducts" Type="Self.FoodProducts" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodProducts">
+              <PropertyRef Name="FoodProductsId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="FoodProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZOOModelStoreContainer">
+          <EntitySet Name="AnimalGroups" EntityType="Self.AnimalGroups" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cleanings" EntityType="Self.Cleanings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedings" EntityType="Self.Feedings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FoodProducts" EntityType="Self.FoodProducts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__AnimalGro__Pavil__489AC854" Association="Self.FK__AnimalGro__Pavil__489AC854">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animals__AnimalG__498EEC8D" Association="Self.FK__Animals__AnimalG__498EEC8D">
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleanings__Emplo__4A8310C6" Association="Self.FK__Cleanings__Emplo__4A8310C6">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Cleanings" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleanings__Pavil__4B7734FF" Association="Self.FK__Cleanings__Pavil__4B7734FF">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="Cleanings" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Delivery__FoodPr__4C6B5938" Association="Self.FK__Delivery__FoodPr__4C6B5938">
+            <End Role="FoodProducts" EntitySet="FoodProducts" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Delivery__Suppli__4D5F7D71" Association="Self.FK__Delivery__Suppli__4D5F7D71">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__Animal__4E53A1AA" Association="Self.FK__Feedings__Animal__4E53A1AA">
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__Employ__4F47C5E3" Association="Self.FK__Feedings__Employ__4F47C5E3">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__FoodPr__503BEA1C" Association="Self.FK__Feedings__FoodPr__503BEA1C">
+            <End Role="FoodProducts" EntitySet="FoodProducts" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ZOOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AnimalGroups">
+          <Key>
+            <PropertyRef Name="AnimalGroupId" />
+          </Key>
+          <Property Name="AnimalGroupId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PavilionId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pavilions" Relationship="Self.FK__AnimalGro__Pavil__489AC854" FromRole="AnimalGroups" ToRole="Pavilions" />
+          <NavigationProperty Name="Animals" Relationship="Self.FK__Animals__AnimalG__498EEC8D" FromRole="AnimalGroups" ToRole="Animals" />
+          <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__Animal__4E53A1AA" FromRole="AnimalGroups" ToRole="Feedings" />
+        </EntityType>
+        <EntityType Name="Animals">
+          <Key>
+            <PropertyRef Name="AnimalId" />
+          </Key>
+          <Property Name="AnimalId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnimalGroupId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Species" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="BirthDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeathDate" Type="DateTime" Precision="0" />
+          <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__Animals__AnimalG__498EEC8D" FromRole="Animals" ToRole="AnimalGroups" />
+        </EntityType>
+        <EntityType Name="Cleanings">
+          <Key>
+            <PropertyRef Name="CleaningId" />
+          </Key>
+          <Property Name="CleaningId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="PavilionId" Type="Int32" Nullable="false" />
+          <Property Name="CleaningDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="TimeForCleaning" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Cleanings__Emplo__4A8310C6" FromRole="Cleanings" ToRole="Employees" />
+          <NavigationProperty Name="Pavilions" Relationship="Self.FK__Cleanings__Pavil__4B7734FF" FromRole="Cleanings" ToRole="Pavilions" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="DeliveryId" />
+          </Key>
+          <Property Name="DeliveryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="FoodProductsId" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="FoodProducts" Relationship="Self.FK__Delivery__FoodPr__4C6B5938" FromRole="Delivery" ToRole="FoodProducts" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK__Delivery__Suppli__4D5F7D71" FromRole="Delivery" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salary" Type="Int32" Nullable="false" />
+          <Property Name="Position" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleanings__Emplo__4A8310C6" FromRole="Employees" ToRole="Cleanings" />
+          <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__Employ__4F47C5E3" FromRole="Employees" ToRole="Feedings" />
+        </EntityType>
+        <EntityType Name="Feedings">
+          <Key>
+            <PropertyRef Name="FeedingId" />
+          </Key>
+          <Property Name="FeedingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AnimalGroupId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FoodProductsId" Type="Int32" Nullable="false" />
+          <Property Name="TimeForFeeding" Type="Int32" Nullable="false" />
+          <Property Name="FeedingDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__Feedings__Animal__4E53A1AA" FromRole="Feedings" ToRole="AnimalGroups" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK__Feedings__Employ__4F47C5E3" FromRole="Feedings" ToRole="Employees" />
+          <NavigationProperty Name="FoodProducts" Relationship="Self.FK__Feedings__FoodPr__503BEA1C" FromRole="Feedings" ToRole="FoodProducts" />
+        </EntityType>
+        <EntityType Name="FoodProducts">
+          <Key>
+            <PropertyRef Name="FoodProductsId" />
+          </Key>
+          <Property Name="FoodProductsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="ExpiryDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Calories" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK__Delivery__FoodPr__4C6B5938" FromRole="FoodProducts" ToRole="Delivery" />
+          <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__FoodPr__503BEA1C" FromRole="FoodProducts" ToRole="Feedings" />
+        </EntityType>
+        <EntityType Name="Pavilions">
+          <Key>
+            <PropertyRef Name="PavilionId" />
+          </Key>
+          <Property Name="PavilionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surface" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__AnimalGro__Pavil__489AC854" FromRole="Pavilions" ToRole="AnimalGroups" />
+          <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleanings__Pavil__4B7734FF" FromRole="Pavilions" ToRole="Cleanings" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ContactName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK__Delivery__Suppli__4D5F7D71" FromRole="Suppliers" ToRole="Delivery" />
+        </EntityType>
+        <Association Name="FK__AnimalGro__Pavil__489AC854">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="PavilionId" />
+            </Principal>
+            <Dependent Role="AnimalGroups">
+              <PropertyRef Name="PavilionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Animals__AnimalG__498EEC8D">
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="1" />
+          <End Role="Animals" Type="Self.Animals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalGroups">
+              <PropertyRef Name="AnimalGroupId" />
+            </Principal>
+            <Dependent Role="Animals">
+              <PropertyRef Name="AnimalGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__Animal__4E53A1AA">
+          <End Role="AnimalGroups" Type="Self.AnimalGroups" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AnimalGroups">
+              <PropertyRef Name="AnimalGroupId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="AnimalGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleanings__Emplo__4A8310C6">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Cleanings" Type="Self.Cleanings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Cleanings">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Cleanings__Pavil__4B7734FF">
+          <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
+          <End Role="Cleanings" Type="Self.Cleanings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pavilions">
+              <PropertyRef Name="PavilionId" />
+            </Principal>
+            <Dependent Role="Cleanings">
+              <PropertyRef Name="PavilionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Delivery__FoodPr__4C6B5938">
+          <End Role="FoodProducts" Type="Self.FoodProducts" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodProducts">
+              <PropertyRef Name="FoodProductsId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="FoodProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Delivery__Suppli__4D5F7D71">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="SupplierId" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__Employ__4F47C5E3">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Feedings__FoodPr__503BEA1C">
+          <End Role="FoodProducts" Type="Self.FoodProducts" Multiplicity="1" />
+          <End Role="Feedings" Type="Self.Feedings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FoodProducts">
+              <PropertyRef Name="FoodProductsId" />
+            </Principal>
+            <Dependent Role="Feedings">
+              <PropertyRef Name="FoodProductsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ZOOEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AnimalGroups" EntityType="Self.AnimalGroups" />
+          <EntitySet Name="Animals" EntityType="Self.Animals" />
+          <EntitySet Name="Cleanings" EntityType="Self.Cleanings" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Feedings" EntityType="Self.Feedings" />
+          <EntitySet Name="FoodProducts" EntityType="Self.FoodProducts" />
+          <EntitySet Name="Pavilions" EntityType="Self.Pavilions" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+          <AssociationSet Name="FK__AnimalGro__Pavil__489AC854" Association="Self.FK__AnimalGro__Pavil__489AC854">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Animals__AnimalG__498EEC8D" Association="Self.FK__Animals__AnimalG__498EEC8D">
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+            <End Role="Animals" EntitySet="Animals" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__Animal__4E53A1AA" Association="Self.FK__Feedings__Animal__4E53A1AA">
+            <End Role="AnimalGroups" EntitySet="AnimalGroups" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleanings__Emplo__4A8310C6" Association="Self.FK__Cleanings__Emplo__4A8310C6">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Cleanings" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Cleanings__Pavil__4B7734FF" Association="Self.FK__Cleanings__Pavil__4B7734FF">
+            <End Role="Pavilions" EntitySet="Pavilions" />
+            <End Role="Cleanings" EntitySet="Cleanings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Delivery__FoodPr__4C6B5938" Association="Self.FK__Delivery__FoodPr__4C6B5938">
+            <End Role="FoodProducts" EntitySet="FoodProducts" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Delivery__Suppli__4D5F7D71" Association="Self.FK__Delivery__Suppli__4D5F7D71">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__Employ__4F47C5E3" Association="Self.FK__Feedings__Employ__4F47C5E3">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Feedings__FoodPr__503BEA1C" Association="Self.FK__Feedings__FoodPr__503BEA1C">
+            <End Role="FoodProducts" EntitySet="FoodProducts" />
+            <End Role="Feedings" EntitySet="Feedings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ZOOModelStoreContainer" CdmEntityContainer="ZOOEntities">
+          <EntitySetMapping Name="AnimalGroups">
+            <EntityTypeMapping TypeName="ZOOModel.AnimalGroups">
+              <MappingFragment StoreEntitySet="AnimalGroups">
+                <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
+                <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Animals">
+            <EntityTypeMapping TypeName="ZOOModel.Animals">
+              <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="AnimalId" ColumnName="AnimalId" />
+                <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Species" ColumnName="Species" />
+                <ScalarProperty Name="BirthDate" ColumnName="BirthDate" />
+                <ScalarProperty Name="DeathDate" ColumnName="DeathDate" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cleanings">
+            <EntityTypeMapping TypeName="ZOOModel.Cleanings">
+              <MappingFragment StoreEntitySet="Cleanings">
+                <ScalarProperty Name="CleaningId" ColumnName="CleaningId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
+                <ScalarProperty Name="CleaningDate" ColumnName="CleaningDate" />
+                <ScalarProperty Name="TimeForCleaning" ColumnName="TimeForCleaning" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery">
+            <EntityTypeMapping TypeName="ZOOModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="ZOOModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="Position" ColumnName="Position" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedings">
+            <EntityTypeMapping TypeName="ZOOModel.Feedings">
+              <MappingFragment StoreEntitySet="Feedings">
+                <ScalarProperty Name="FeedingId" ColumnName="FeedingId" />
+                <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
+                <ScalarProperty Name="TimeForFeeding" ColumnName="TimeForFeeding" />
+                <ScalarProperty Name="FeedingDate" ColumnName="FeedingDate" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FoodProducts">
+            <EntityTypeMapping TypeName="ZOOModel.FoodProducts">
+              <MappingFragment StoreEntitySet="FoodProducts">
+                <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="Calories" ColumnName="Calories" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pavilions">
+            <EntityTypeMapping TypeName="ZOOModel.Pavilions">
+              <MappingFragment StoreEntitySet="Pavilions">
+                <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
+                <ScalarProperty Name="Surface" ColumnName="Surface" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="ZOOModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
