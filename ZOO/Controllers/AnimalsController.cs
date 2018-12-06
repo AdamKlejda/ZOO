@@ -10,6 +10,7 @@ using ZOO.Models;
 
 namespace ZOO.Controllers
 {
+
     public class AnimalsController : Controller
     {
         private ZOOEntities db = new ZOOEntities();
@@ -48,12 +49,39 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AnimalId,AnimalGroupId,Name,Species,BirthDate,DeathDate,Sex")] Animals animals)
+        public ActionResult Create([Bind(Include = "AnimalId,AnimalGroupId,Name,Species,BirthDate,Sex")] Animals animals)
         {
             if (ModelState.IsValid)
             {
+                ViewBag.Exception = null;
+                string msg = null;
                 db.Animals.Add(animals);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    if(e.InnerException == null)
+                    {
+                        
+                        msg = "Niepoprawne dane zwierzęcia";
+                        
+                        
+                    }
+                    else
+                    {
+                        msg = e.InnerException.InnerException.Message;
+                    }
+                    ViewBag.Exception = msg;
+                    ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
+
+                    //return RedirectToAction("Index","Error");
+                    return View(animals);
+                    
+                    
+                }
+
                 return RedirectToAction("Index");
             }
 
@@ -84,11 +112,35 @@ namespace ZOO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "AnimalId,AnimalGroupId,Name,Species,BirthDate,DeathDate,Sex")] Animals animals)
         {
+            ViewBag.Exception = null;
+                string msg = null;
             if (ModelState.IsValid)
             {
                 db.Entry(animals).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+
+                        msg = "Niepoprawne dane zwierzęcia";
+
+
+                    }
+                    else
+                    {
+                        msg = e.InnerException.InnerException.Message;
+                    }
+                    ViewBag.Exception = msg;
+                    ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
+
+                    //return RedirectToAction("Index","Error");
+                    return View(animals);
+                }
+                    return RedirectToAction("Index");
             }
             ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name", animals.AnimalGroupId);
             return View(animals);

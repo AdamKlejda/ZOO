@@ -1,51 +1,119 @@
-﻿@model IEnumerable<ZOO.Models.Delivery>
+﻿@model ZOO.Controllers.DeliveriesViewModel
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Deliveries</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Create New Delivery", "Create")</li>
+        <li>@Html.ActionLink("Go To Suppliers", "Index", "Suppliers", new { area = "" }, null)</li>
+        <li>@Html.ActionLink("Go To Food products", "Index", "FoodProducts", new { area = "" }, null)</li>
+
+    </ul>
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.DeliveryDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Quantity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FoodProducts.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Suppliers.CompanyName)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.DeliveryDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Quantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FoodProducts.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Suppliers.CompanyName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.DeliveryId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.DeliveryId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.DeliveryId })
-        </td>
-    </tr>
+
+
+@try
+{
+    if (Model.delieveries != null)
+    {
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveries.ElementAt(0).DeliveryDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveries.ElementAt(0).Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveries.ElementAt(0).FoodProducts.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveries.ElementAt(0).Suppliers.CompanyName)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.delieveries)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Suppliers.CompanyName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.DeliveryId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
 }
+catch (Exception e) { }
 
-</table>
+<h2>Archive</h2>
+
+@try
+{
+    if (Model.delieveriesPast != null)
+    {
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveriesPast.ElementAt(0).DeliveryDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveriesPast.ElementAt(0).Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveriesPast.ElementAt(0).FoodProducts.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.delieveriesPast.ElementAt(0).Suppliers.CompanyName)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.delieveriesPast)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Suppliers.CompanyName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.DeliveryId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+catch (Exception e) { }

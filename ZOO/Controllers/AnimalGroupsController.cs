@@ -10,6 +10,13 @@ using ZOO.Models;
 
 namespace ZOO.Controllers
 {
+    public class AnimalsGroupModelView
+    {
+        public AnimalGroups animalGroup { get; set; }
+        public List<Feedings> feedings  { get; set; }
+        public List<Animals> animals { get; set; }
+
+    }
     public class AnimalGroupsController : Controller
     {
         private ZOOEntities db = new ZOOEntities();
@@ -33,7 +40,52 @@ namespace ZOO.Controllers
             {
                 return HttpNotFound();
             }
-            return View(animalGroups);
+
+
+            AnimalsGroupModelView data = new AnimalsGroupModelView();
+
+            var animals = from a in db.Animals
+                          where a.AnimalGroupId == id
+                          select a;
+            var feedings = from f in db.Feedings
+                           where f.AnimalGroupId == id
+                           select f;
+            try
+            {
+
+                if (animals != null)
+                {
+                    List<Animals> tanimals = new List<Animals>();
+                    foreach (Animals animal in animals)
+                    {
+                        tanimals.Add(animal);
+                    }
+                    data.animals = tanimals;
+                }
+            }
+            catch (Exception e)
+            {
+
+            }
+            try
+            {
+                
+                if(feedings != null)
+                {
+                    List<Feedings> tfeedings = new List<Feedings>();
+                    foreach(Feedings feeding in feedings)
+                    {
+                        tfeedings.Add(feeding);
+                    }
+                    data.feedings = tfeedings;
+                }
+            }catch(Exception e)
+            {
+
+            }
+            data.animalGroup = animalGroups;
+
+            return View(data);
         }
 
         // GET: AnimalGroups/Create

@@ -10,6 +10,11 @@ using ZOO.Models;
 
 namespace ZOO.Controllers
 {
+    public class SuppliersModelView
+    {
+        public Suppliers supplier { get; set; }
+        public List<Delivery>deliveries { get; set; }
+    }
     public class SuppliersController : Controller
     {
         private ZOOEntities db = new ZOOEntities();
@@ -32,7 +37,27 @@ namespace ZOO.Controllers
             {
                 return HttpNotFound();
             }
-            return View(suppliers);
+
+            SuppliersModelView data = new SuppliersModelView();
+
+            var deliveries = from d in db.Delivery
+                         where d.SupplierId == id
+                         select d;
+            try
+            {
+                if (deliveries != null)
+                {
+                    List<Delivery> Tdeliveries = new List<Delivery>();
+                    foreach(Delivery delivery in deliveries)
+                    {
+                        Tdeliveries.Add(delivery);
+                    }
+                    data.deliveries = Tdeliveries;
+                }
+            }catch(Exception e) { }
+
+            data.supplier = suppliers;
+            return View(data);
         }
 
         // GET: Suppliers/Create

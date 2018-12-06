@@ -2,38 +2,44 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Animal Groups</h2>
+
+
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" style="background-color:white;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Pavilions.Name)
+            @Html.DisplayName("Pavilions Name")
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Pavilions.Name)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AnimalGroupId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AnimalGroupId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalGroupId })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pavilions.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.AnimalGroupId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.AnimalGroupId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.AnimalGroupId })
+            </td>
+        </tr>
+    }
 
 </table>
+<td>@Html.ActionLink("All Animals", "Index", "Animals", new { area = "" }, null)</td>
+

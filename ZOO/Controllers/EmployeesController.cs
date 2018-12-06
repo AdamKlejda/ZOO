@@ -10,6 +10,14 @@ using ZOO.Models;
 
 namespace ZOO.Controllers
 {
+    public class EmployeesViewModel
+    {
+        public Employees employee { get; set; }
+        public List<Cleanings> cleanings { get; set; }
+        public List<Feedings> feedings { get; set; }
+
+
+    }
     public class EmployeesController : Controller
     {
         private ZOOEntities db = new ZOOEntities();
@@ -32,7 +40,60 @@ namespace ZOO.Controllers
             {
                 return HttpNotFound();
             }
-            return View(employees);
+            var cleanings = from c in db.Cleanings
+                            where c.EmployeeId == id
+                            select c;
+            var feedings = from c in db.Feedings
+                            where c.EmployeeId == id
+                            select c;
+
+            EmployeesViewModel data = new EmployeesViewModel();
+            data.employee = employees;
+
+            if (cleanings != null) {
+                ViewBag.Exception = null;
+                string msg = null;
+                try
+                {
+                    List<Cleanings> Tcleanings = new List<Cleanings>();
+                    foreach (var cleaning in cleanings)
+                    {
+
+                        Tcleanings.Add(cleaning);
+                    }
+                    data.cleanings = Tcleanings;
+
+                }
+                catch (Exception e)
+                {
+                    msg = e.InnerException.InnerException.Message;
+                    ViewBag.Exception = msg;
+                }
+            }
+            if (feedings != null)
+            {
+                ViewBag.Exception = null;
+                string msg = null;
+                try
+                {
+                    List<Feedings> Tfeedings = new List<Feedings>();
+                    foreach (var feeding in feedings)
+                    {
+
+                        Tfeedings.Add(feeding);
+                    }
+                    data.feedings = Tfeedings;
+
+                }
+                catch (Exception e)
+                {
+                    msg = e.InnerException.InnerException.Message;
+                    ViewBag.Exception = msg;
+                }
+            }
+
+
+            return View(data);
         }
 
         // GET: Employees/Create

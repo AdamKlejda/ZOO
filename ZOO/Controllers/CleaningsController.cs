@@ -51,10 +51,31 @@ namespace ZOO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CleaningId,EmployeeId,PavilionId,CleaningDate,TimeForCleaning")] Cleanings cleanings)
         {
+
+            ViewBag.Exception = null;
+            string msg = null;
             if (ModelState.IsValid)
             {
                 db.Cleanings.Add(cleanings);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                   
+                   
+                    msg = e.InnerException.InnerException.Message;
+                    
+                    ViewBag.Exception = msg;
+                    ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName");
+                    ViewBag.PavilionId = new SelectList(db.Pavilions, "PavilionId", "Name");
+
+                    return View(cleanings);
+
+
+                }
                 return RedirectToAction("Index");
             }
 

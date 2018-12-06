@@ -1,7 +1,8 @@
-﻿@model ZOO.Models.Suppliers
+﻿@model ZOO.Controllers.SuppliersModelView
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Details</h2>
@@ -11,56 +12,108 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CompanyName)
+
+            @Html.DisplayNameFor(model => model.supplier.CompanyName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CompanyName)
+            @Html.DisplayFor(model => model.supplier.CompanyName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ContactName)
+            @Html.DisplayNameFor(model => model.supplier.ContactName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ContactName)
+            @Html.DisplayFor(model => model.supplier.ContactName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Address)
+            @Html.DisplayNameFor(model => model.supplier.Address)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Address)
+            @Html.DisplayFor(model => model.supplier.Address)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.City)
+            @Html.DisplayNameFor(model => model.supplier.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.City)
+            @Html.DisplayFor(model => model.supplier.City)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.DisplayNameFor(model => model.supplier.Country)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Country)
+            @Html.DisplayFor(model => model.supplier.Country)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Phone)
+            @Html.DisplayNameFor(model => model.supplier.Phone)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Phone)
+            @Html.DisplayFor(model => model.supplier.Phone)
         </dd>
 
     </dl>
 </div>
+@try
+{
+    if (Model.deliveries != null)
+    {
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.deliveries.ElementAt(0).DeliveryDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.deliveries.ElementAt(0).Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.deliveries.ElementAt(0).FoodProducts.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.deliveries.ElementAt(0).Suppliers.CompanyName)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.deliveries)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DeliveryDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Suppliers.CompanyName)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.DeliveryId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.DeliveryId })
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+
+    }
+}
+catch (Exception e) { }
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SupplierId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.supplier.SupplierId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

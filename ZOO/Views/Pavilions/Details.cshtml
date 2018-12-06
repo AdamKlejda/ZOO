@@ -1,34 +1,137 @@
-﻿@model ZOO.Models.Pavilions
+﻿@model ZOO.Controllers.PavilonViewModel
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Pavillion</h2>
 
 <div>
-    <h4>Pavilions</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Surface)
+            @Html.DisplayNameFor(model => model.pavilion.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Surface)
+            @Html.DisplayFor(model => model.pavilion.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+
+            @Html.DisplayNameFor(m => m.pavilion.Surface)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(m => m.pavilion.Surface)
         </dd>
+
+
 
     </dl>
 </div>
+@try
+{
+    if (Model.animals != null)
+    {
+
+        <h4>Animals:</h4>
+
+
+
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(Model => Model.animals.ElementAt(0).Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(Model => Model.animals.ElementAt(0).Species)
+                </th>
+
+                <th>
+                    @Html.DisplayName("Animal Group Name")
+                </th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.animals)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Species)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnimalGroups.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Animals", new { id = item.AnimalId }, null) |
+                        @Html.ActionLink("Details", "Details", "Animals", new { id = item.AnimalId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Animals", new { id = item.AnimalId }, null)
+
+                    </td>
+                </tr>
+            }
+        </table>
+
+
+    }
+}
+catch (Exception e) { }
+@try
+{
+    <h4>Cleanings:</h4>
+
+    if (Model.cleanings != null)
+    {
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayName("Cleaning Date")
+                </th>
+                <th>
+                    @Html.DisplayName("Time For Cleaning")
+                </th>
+                <th>
+                    @Html.DisplayName("Employees First Name")
+                </th>
+                
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.cleanings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CleaningDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeForCleaning)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employees.FirstName)
+                    </td>
+                   
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Cleanings", new { id = item.CleaningId }, null) |
+                        @Html.ActionLink("Details", "Details", "Cleanings", new { id = item.CleaningId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Cleanings", new { id = item.CleaningId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    }
+}
+catch (Exception e) { }
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.PavilionId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.pavilion.PavilionId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+

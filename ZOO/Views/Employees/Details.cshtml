@@ -1,66 +1,169 @@
-﻿@model ZOO.Models.Employees
+﻿@model ZOO.Controllers.EmployeesViewModel
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Employees</h2>
 
 <div>
-    <h4>Employees</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.employee.FirstName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FirstName)
+            @Html.DisplayFor(model => model.employee.FirstName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.employee.LastName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LastName)
+            @Html.DisplayFor(model => model.employee.LastName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Salary)
+            @Html.DisplayNameFor(model => model.employee.Salary)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Salary)
+            @Html.DisplayFor(model => model.employee.Salary)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Position)
+            @Html.DisplayNameFor(model => model.employee.Position)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Position)
+            @Html.DisplayFor(model => model.employee.Position)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.login)
+            @Html.DisplayNameFor(model => model.employee.login)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.login)
+            @Html.DisplayFor(model => model.employee.login)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.password)
+            @Html.DisplayNameFor(model => model.employee.password)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.password)
+            @Html.DisplayFor(model => model.employee.password)
         </dd>
 
     </dl>
 </div>
+
+
+@try
+{
+    <p class="lead">Feeding job:</p>
+    @Html.ActionLink("Add Feeding", "Create", "Feedings", new { }, null)
+
+    if (Model.feedings != null)
+    {
+        <table class="table" border ="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedings.ElementAt(0).TimeForFeeding)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedings.ElementAt(0).FeedingDate)
+                </th>
+                <th>
+                    @Html.DisplayName("Animal Groups Name")
+                </th>
+
+                <th>
+                    @Html.DisplayName("Food Product")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.feedings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TimeForFeeding)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FeedingDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AnimalGroups.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employees.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Feedings", new { id = item.FeedingId }, null) |
+                        @Html.ActionLink("Details", "Details", "Feedings", new { id = item.FeedingId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Feedings", new { id = item.FeedingId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+catch (Exception e) { }
+
+@try
+{
+
+    <p class="lead">Cleaning job:</p>
+    @Html.ActionLink("Add Cleaning", "Create", "Cleanings", new { }, null)
+
+    if (Model.cleanings != null)
+    {
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.cleanings.ElementAt(0).CleaningDate)
+                </th>
+
+                <th>
+                    @Html.DisplayName("Pavilions Name")
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.cleanings)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CleaningDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Pavilions.Name)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Cleanings", new { id = item.CleaningId }, null) |
+                        @Html.ActionLink("Details", "Details", "Cleanings", new { id = item.CleaningId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Cleanings", new { id = item.CleaningId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+    }
+}
+catch (Exception e) { }
+
+
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.EmployeeId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.employee.EmployeeId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

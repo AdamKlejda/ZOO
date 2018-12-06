@@ -2,14 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Suppliers</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" style="background-color:white;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.CompanyName)

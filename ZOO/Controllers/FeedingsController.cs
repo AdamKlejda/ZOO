@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ZOO.Models;
 
+
 namespace ZOO.Controllers
 {
     public class FeedingsController : Controller
@@ -52,10 +53,29 @@ namespace ZOO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate,Quantity")] Feedings feedings)
         {
+            ViewBag.Exception = null;
+            string msg = null;
             if (ModelState.IsValid)
             {
                 db.Feedings.Add(feedings);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    
+                    msg = e.InnerException.InnerException.Message;
+                    
+                    ViewBag.Exception = msg;
+                    ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
+                    ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName");
+                    ViewBag.FoodProductsId = new SelectList(db.FoodProducts, "FoodProductsId", "Name");
+
+                    return View(feedings);
+
+
+                }
                 return RedirectToAction("Index");
             }
 
@@ -88,7 +108,7 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate,Quantity")] Feedings feedings)
+        public ActionResult Edit([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate")] Feedings feedings)
         {
             if (ModelState.IsValid)
             {

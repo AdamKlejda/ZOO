@@ -10,6 +10,12 @@ using ZOO.Models;
 
 namespace ZOO.Controllers
 {
+    public class DeliveriesViewModel
+    {
+        public List<Delivery>delieveries { get; set; }
+        public List<Delivery> delieveriesPast { get; set; }
+
+    }
     public class DeliveriesController : Controller
     {
         private ZOOEntities db = new ZOOEntities();
@@ -17,8 +23,42 @@ namespace ZOO.Controllers
         // GET: Deliveries
         public ActionResult Index()
         {
-            var delivery = db.Delivery.Include(d => d.FoodProducts).Include(d => d.Suppliers);
-            return View(delivery.ToList());
+            DateTime todaysDate = DateTime.Now;
+
+            //var delivery = db.Delivery.Include(d => d.FoodProducts).Include(d => d.Suppliers).Where();
+            var deliveries = from d in db.Delivery.Include(d => d.FoodProducts).Include(d => d.Suppliers)
+                           where d.DeliveryDate > todaysDate
+                           select d;
+            var deliveriesPast = from d in db.Delivery.Include(d => d.FoodProducts).Include(d => d.Suppliers)
+                           where d.DeliveryDate < todaysDate
+                           select d;
+            DeliveriesViewModel data = new DeliveriesViewModel();
+            try
+            {
+                List<Delivery> tDeliveries = new List<Delivery>();
+                if (deliveries != null)
+                {
+                    foreach(Delivery delivery in deliveries)
+                    {
+                        tDeliveries.Add(delivery);
+                    }
+                    data.delieveries = tDeliveries;
+                }
+            }catch(Exception e) { }
+            try
+            {
+                List<Delivery> tDeliveriespast = new List<Delivery>();
+                if (deliveriesPast != null)
+                {
+                    foreach (Delivery delivery in deliveriesPast)
+                    {
+                        tDeliveriespast.Add(delivery);
+                    }
+                    data.delieveriesPast = tDeliveriespast;
+                }
+            }
+            catch (Exception e) { }
+            return View(data);
         }
 
         // GET: Deliveries/Details/5

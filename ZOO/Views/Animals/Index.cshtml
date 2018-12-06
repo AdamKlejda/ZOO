@@ -4,12 +4,12 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Animals</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" style="background-color:white;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -17,15 +17,15 @@
         <th>
             @Html.DisplayNameFor(model => model.Species)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DeathDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Sex)
-        </th>
+        <!--<th>
+                @Html.DisplayNameFor(model => model.BirthDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeathDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sex)
+    -        </th>-->
         <th>
             @Html.DisplayNameFor(model => model.AnimalGroups.Name)
         </th>
@@ -40,24 +40,24 @@
         <td>
             @Html.DisplayFor(modelItem => item.Species)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BirthDate)
-        </td>
-        <td>
+        <!--<td>
+        @Html.DisplayFor(modelItem => item.BirthDate)
+    </td>
+    <td>
             @Html.DisplayFor(modelItem => item.DeathDate)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Sex)
-        </td>
+        </td>-->
         <td>
             @Html.DisplayFor(modelItem => item.AnimalGroups.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AnimalId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AnimalId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AnimalId })
+            @Html.ActionLink("Edit", "Edit", new { id = item.AnimalId }) |
+            @Html.ActionLink("Details", "Details", new { id = item.AnimalId }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.AnimalId })
         </td>
     </tr>
-}
+    }
 
-</table>
+    </table>

@@ -1,34 +1,136 @@
-﻿@model ZOO.Models.AnimalGroups
+﻿@model ZOO.Controllers.AnimalsGroupModelView
 
 @{
     ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>AnimalGroups</h2>
 
 <div>
-    <h4>AnimalGroups</h4>
+    <h4>Details</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayName("Group Name")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.animalGroup.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Pavilions.Name)
+            @Html.DisplayName("Pavilions Name")
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Pavilions.Name)
+            @Html.DisplayFor(model => model.animalGroup.Pavilions.Name)
         </dd>
 
     </dl>
 </div>
+
+@try
+{
+    if (Model.animals != null)
+    {
+        <h4>Animals in this group:</h4>
+
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.animals.ElementAt(0).Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.animals.ElementAt(0).Species)
+                </th>
+
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.animals)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Species)
+                    </td>
+
+
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Animals", new { id = item.AnimalId }, null) |
+                        @Html.ActionLink("Details", "Details", "Animals", new { id = item.AnimalId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Animals", new { id = item.AnimalId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    }
+}
+catch (Exception e) { }
+
+@try
+{
+    if (Model.feedings != null)
+    {
+        <h4>Feedings for this group:</h4>
+
+        <table class="table" border="1" style="background-color:white;">
+            <tr>
+
+                <th>
+                    @Html.DisplayNameFor(model => model.feedings.ElementAt(0).FeedingDate)
+                </th>
+
+                <th>
+                    @Html.DisplayName("Employees FirstName")
+                </th>
+                <th>
+                    @Html.DisplayName("Food Products Name")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.feedings.ElementAt(0).Quantity)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.feedings)
+            {
+                <tr>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FeedingDate)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Employees.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FoodProducts.Quantity)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Feedings", new { id = item.FeedingId }, null) |
+                        @Html.ActionLink("Details", "Details", "Feedings", new { id = item.FeedingId }, null) |
+                        @Html.ActionLink("Delete", "Delete", "Feedings", new { id = item.FeedingId }, null)
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    }
+}
+catch (Exception e) { }
+
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.AnimalGroupId }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.animalGroup.AnimalGroupId }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
