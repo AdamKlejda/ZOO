@@ -204,24 +204,10 @@ GO
 ALTER TABLE [dbo].[Feedings]  WITH CHECK ADD FOREIGN KEY([FoodProductsId])
 REFERENCES [dbo].[FoodProducts] ([FoodProductsId])
 GO
-
-
 commit Tran T1;
 
+begin tran T2;
 
-insert AnimalGroups(Name,PavilionId)
-Values(Pawian,2);
-
-
-
-select * from AnimalGroups;
-drop table AnimalGroups;
-
-EXEC sp_msforeachtable "ALTER TABLE ? NOCHECK CONSTRAINT all"
-EXEC sp_MSforeachtable @command1 = "DROP TABLE ?";
-
-
-begin Tran T2;
 INSERT [dbo].[Pavilions] ( [Surface], [Name]) VALUES ( 100, N'Africarium')
 INSERT [dbo].[Pavilions] ( [Surface], [Name]) VALUES ( 50, N'Nocturnals')
 INSERT [dbo].[Pavilions] ( [Surface], [Name]) VALUES ( 73, N'Apery')
@@ -287,7 +273,47 @@ INSERT [dbo].[Delivery] ( [SupplierId], [FoodProductsId], [DeliveryDate], [Quant
 INSERT [dbo].[Delivery] ( [SupplierId], [FoodProductsId], [DeliveryDate], [Quantity]) VALUES ( 1, 3, CAST(N'2018-11-12' AS Date), 5000)
 INSERT [dbo].[Delivery] ( [SupplierId], [FoodProductsId], [DeliveryDate], [Quantity]) VALUES ( 5, 2, CAST(N'2018-11-12' AS Date), 5000)
 INSERT [dbo].[Delivery] ( [SupplierId], [FoodProductsId], [DeliveryDate], [Quantity]) VALUES ( 1, 6, CAST(N'2018-12-01' AS Date), 2130)
-
 commit Tran T2;
+begin tran T3;
+---------------------Triggers----------------------------------------------------------------
+GO
+Create trigger FeedOnce
+on Feedings
+for Insert,Update
+as
+ if (Select Count(*) from Feedings f, inserted i where f.AnimalGroupId=i.AnimalGroupId and f.FeedingDate=i.FeedingDate)>1
+  begin
+	 raiserror('*** Those animals have already eaten tonight ***',16,1)
+	 rollback
+  end
+-------------
+Go
+create Trigger messyPavilions on Cleanings after insert as
+if exists (select p.PavilionId from Pavilions p join Cleanings c on c.PavilionId=p.PavilionId where c.CleaningDate < DateAdd(DAY, -1, GetDate()))
+begin
+DECLARE @result varchar(MAX)
+Select @result = COALESCE(@result + ', ', '') + p.Name from Pavilions p join Cleanings c on c.PavilionId=p.PavilionId where c.CleaningDate < DateAdd(DAY, -1, GetDate())	
+RAISERROR('Some of the pavilions need cleaning - %s', 16, 1, @result)
+END
 
-select * from Animals;
+------------------Procedures-------------------------------------------------------------------
+Go
+CREATE procedure KillAnimal
+@a int
+as
+if ((select DeathDate from Animals where AnimalId=@a) is null) 
+begin
+Update Animals
+set DeathDate = GETDATE()
+where AnimalId=@a
+end
+else
+begin
+RAISERROR ('*** This animal is already dead! ***',16,1)
+end
+
+
+
+commit Tran T3;
+
+
