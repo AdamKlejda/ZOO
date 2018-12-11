@@ -57,10 +57,16 @@ namespace ZOO.Controllers
             string msg = null;
             if (ModelState.IsValid)
             {
+
                 db.Feedings.Add(feedings);
                 try
                 {
+
+
+                    FoodProducts foodProducts = db.FoodProducts.Single(c => c.FoodProductsId == feedings.FoodProductsId);
+                    foodProducts.Quantity = foodProducts.Quantity-feedings.Quantity ?? default(int) ;
                     db.SaveChanges();
+                        
                 }
                 catch (Exception e)
                 {
