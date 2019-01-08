@@ -1,0 +1,103 @@
+﻿@model IEnumerable<ZOO.Models.Food_Report_Result>
+
+@{
+    ViewBag.Title = "Food_Report";
+    Layout = "~/Views/Shared/_LayoutReports.cshtml";
+
+}
+
+
+
+@{
+    var DateFrom = "";
+    var DateTo = "";
+
+    if (IsPost)
+    {
+        DateFrom = Request.Form["date"];
+        DateTo = Request.Form["date"];
+    }
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+<div class="form-group">
+    <div class="col-md-10">
+        <p>
+            <label for="DateFrom">DateFrom:</label>
+            <input type="date" name="DateFrom" value="@Request.Form["date"]" />
+        </p>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-10">
+        <p>
+            <label for="DateTo">DateTo:</label>
+            <input type="date" name="DateTo" value="@Request.Form["date"]" />
+        </p>
+    </div>
+</div>
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Generate" class="btn btn-default" />
+    </div>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<h2>Food_Report</h2>
+
+
+<table class="table" border="1" style="background-color:white;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).FoodProductsId)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).Eaten)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).Bought)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).Balance)
+        </th>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodProductsId)
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eaten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bought)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Balance)
+            </td>
+
+
+        </tr>
+    }
+
+</table>
+
+

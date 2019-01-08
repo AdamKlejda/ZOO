@@ -12,6 +12,8 @@ namespace ZOO.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class ZOOEntities : DbContext
     {
@@ -34,5 +36,32 @@ namespace ZOO.Models
         public virtual DbSet<FoodProducts> FoodProducts { get; set; }
         public virtual DbSet<Pavilions> Pavilions { get; set; }
         public virtual DbSet<Suppliers> Suppliers { get; set; }
+        public virtual DbSet<BusiestEmployees> BusiestEmployees { get; set; }
+    
+        public virtual ObjectResult<Calories_per_Group_Result> Calories_per_Group(Nullable<System.DateTime> start, Nullable<System.DateTime> stop)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var stopParameter = stop.HasValue ?
+                new ObjectParameter("stop", stop) :
+                new ObjectParameter("stop", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Calories_per_Group_Result>("Calories_per_Group", startParameter, stopParameter);
+        }
+    
+        public virtual ObjectResult<Food_Report_Result> Food_Report(Nullable<System.DateTime> start, Nullable<System.DateTime> stop)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var stopParameter = stop.HasValue ?
+                new ObjectParameter("stop", stop) :
+                new ObjectParameter("stop", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Food_Report_Result>("Food_Report", startParameter, stopParameter);
+        }
     }
 }
