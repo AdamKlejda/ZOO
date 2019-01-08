@@ -199,6 +199,12 @@
     <Compile Include="Models\Animals.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BusiestEmployees.cs">
+      <DependentUpon>ZOO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Calories_per_Group_Result.cs">
+      <DependentUpon>ZOO.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Cleanings.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
@@ -214,6 +220,9 @@
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\FoodProducts.cs">
+      <DependentUpon>ZOO.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Food_Report_Result.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Pavilions.cs">
@@ -349,6 +358,9 @@
     <Content Include="Views\Report\ReportEmployee.cshtml" />
     <Content Include="Views\FeedingReminder\Index.cshtml" />
     <Content Include="Views\FeedingReminder\MarkAsShown.cshtml" />
+    <Content Include="Views\Report\BusiestEmployees.cshtml" />
+    <Content Include="Views\Report\Food_Report.cshtml" />
+    <Content Include="Views\Report\Calories_per_Group.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

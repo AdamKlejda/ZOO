@@ -42,12 +42,11 @@
         }
         <div>
             <h2>Reports</h2>
-
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Report1", "ReportEmployee", "Report", new { id = "1" }, null)</li>
-                <li>@Html.ActionLink("Report2", "Report2", "Report", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("Report3", "Report3", "Report", new { area = "" }, null)</li>
-                <li>@Html.ActionLink("Report4", "Report4", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Work Report For Employee", "ReportEmployee", "Report", new { id = "1" }, null)</li>
+                <li>@Html.ActionLink("Busiest Employees Report", "BusiestEmployees", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Food Product Report", "Food_Report", "Report", new { datefrom = @DateTime.Now.AddMonths(-5), dateTo = @DateTime.Now }, null)</li>
+                <li>@Html.ActionLink("Calories Report", "Calories_per_Group", "Report", new { datefrom = @DateTime.Now.AddMonths(-5), dateTo = @DateTime.Now }, null)</li>
 
             </ul>
         </div>
@@ -58,7 +57,7 @@
         
         <div>
             <footer>
-                <p>&copy; @DateTime.Now.Year — Open Beta Version 1.0.5</p>
+                <p>&copy; @DateTime.Now.Year — Open Beta Version 1.1.7</p>
             </footer>
         </div>
       

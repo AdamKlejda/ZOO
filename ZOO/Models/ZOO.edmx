@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ZOOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ZOOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AnimalGroups">
           <Key>
             <PropertyRef Name="AnimalGroupId" />
@@ -98,6 +98,15 @@
           <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZOO.MDF.dbo.BusiestEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BusiestEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Appearances" Type="int" />
         </EntityType>
         <Association Name="FK__AnimalGro__Pavil__489AC854">
           <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
@@ -207,6 +216,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Calories_per_Group" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="stop" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="Food_Report" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="start" Type="datetime" Mode="In" />
+          <Parameter Name="stop" Type="datetime" Mode="In" />
+        </Function>
         <EntityContainer Name="ZOOModelStoreContainer">
           <EntitySet Name="AnimalGroups" EntityType="Self.AnimalGroups" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Animals" EntityType="Self.Animals" Schema="dbo" store:Type="Tables" />
@@ -217,6 +234,12 @@
           <EntitySet Name="FoodProducts" EntityType="Self.FoodProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Pavilions" EntityType="Self.Pavilions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BusiestEmployees" EntityType="Self.BusiestEmployees" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [BusiestEmployees].[EmployeeId] AS [EmployeeId], 
+    [BusiestEmployees].[Appearances] AS [Appearances]
+    FROM [dbo].[BusiestEmployees] AS [BusiestEmployees]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__AnimalGro__Pavil__489AC854" Association="Self.FK__AnimalGro__Pavil__489AC854">
             <End Role="Pavilions" EntitySet="Pavilions" />
             <End Role="AnimalGroups" EntitySet="AnimalGroups" />
@@ -254,8 +277,7 @@
             <End Role="Feedings" EntitySet="Feedings" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ZOOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -525,7 +547,33 @@
             <End Role="FoodProducts" EntitySet="FoodProducts" />
             <End Role="Feedings" EntitySet="Feedings" />
           </AssociationSet>
+          <EntitySet Name="BusiestEmployees" EntityType="ZOOModel.BusiestEmployees" />
+          <FunctionImport Name="Calories_per_Group" ReturnType="Collection(ZOOModel.Calories_per_Group_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="stop" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Food_Report" ReturnType="Collection(ZOOModel.Food_Report_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="stop" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
+        <EntityType Name="BusiestEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Appearances" Type="Int32" />
+        </EntityType>
+        <ComplexType Name="Calories_per_Group_Result">
+          <Property Type="Int32" Name="AnimalGroupId" Nullable="false" />
+          <Property Type="Int32" Name="Eaten" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Food_Report_Result">
+          <Property Type="Int32" Name="FoodProductsId" Nullable="false" />
+          <Property Type="Int32" Name="Eaten" Nullable="true" />
+          <Property Type="Int32" Name="Bought" Nullable="true" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -635,6 +683,32 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="BusiestEmployees">
+            <EntityTypeMapping TypeName="ZOOModel.BusiestEmployees">
+              <MappingFragment StoreEntitySet="BusiestEmployees">
+                <ScalarProperty Name="Appearances" ColumnName="Appearances" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Calories_per_Group" FunctionName="ZOOModel.Store.Calories_per_Group">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ZOOModel.Calories_per_Group_Result">
+                <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
+                <ScalarProperty Name="Eaten" ColumnName="Eaten" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Food_Report" FunctionName="ZOOModel.Store.Food_Report">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ZOOModel.Food_Report_Result">
+                <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
+                <ScalarProperty Name="Eaten" ColumnName="Eaten" />
+                <ScalarProperty Name="Bought" ColumnName="Bought" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

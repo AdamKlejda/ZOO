@@ -93,13 +93,33 @@ namespace ZOO.Controllers
                     ViewBag.Exception = msg;
                 }
             }
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName");
+
             return View(data);
             
         }
 
-        public ActionResult HardWorkers()
+        public ActionResult BusiestEmployees()
         {
-            return View();
+            var busiest = from c in db.BusiestEmployees
+                          select c;
+            ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName");
+
+            return View(busiest);
+        }
+
+        public ActionResult Food_Report(DateTime datefrom, DateTime dateTo)
+        {
+            ViewBag.FoodProductsId = new SelectList(db.FoodProducts, "FoodProductsId", "Name");
+            var food = db.Food_Report(datefrom, dateTo);
+            return View(food);
+        }
+
+        public ActionResult Calories_per_Group(DateTime datefrom, DateTime dateTo)
+        {
+            ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
+            var callories = db.Calories_per_Group(datefrom, dateTo);
+            return View(callories);
         }
     }
 }

@@ -23,6 +23,7 @@
         <AssociationConnector Association="ZOOModel.FK__Delivery__Suppli__4D5F7D71" ManuallyRouted="false" />
         <AssociationConnector Association="ZOOModel.FK__Feedings__Employ__4F47C5E3" ManuallyRouted="false" />
         <AssociationConnector Association="ZOOModel.FK__Feedings__FoodPr__503BEA1C" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ZOOModel.BusiestEmployees" Width="1.5" PointX="0.75" PointY="8.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
