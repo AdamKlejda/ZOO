@@ -17,6 +17,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
                 </button>
                 @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
@@ -27,7 +29,7 @@
                     <li>@Html.ActionLink("Works", "Index", "Works", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Deliveries", "Index", "Deliveries", new { area = "" }, null)</li>
                     <li>@Html.ActionLink("Pavilions", "Index", "Pavilions", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Reports", "Index", "Report", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Reports", "Index", "Report", new { area = "" }, null)</li>                    
                 </ul>
             </div>
         </div>
@@ -38,11 +40,28 @@
         <h3><font color="red">DB Server Exception</font></h3>
         <h5><font color="red">@ViewBag.Exception</font></h5>
         }
+        <div>
+            <h2>Reports</h2>
+
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Report1", "ReportEmployee", "Report", new { id = "1" }, null)</li>
+                <li>@Html.ActionLink("Report2", "Report2", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Report3", "Report3", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Report4", "Report4", "Report", new { area = "" }, null)</li>
+
+            </ul>
+        </div>
         @RenderBody()
+        <br />
+        <br />
         <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year — Open Beta Version 1.0.5</p>
-        </footer>
+        
+        <div>
+            <footer>
+                <p>&copy; @DateTime.Now.Year — Open Beta Version 1.0.5</p>
+            </footer>
+        </div>
+      
     </div>
 
     @Scripts.Render("~/bundles/jquery")
