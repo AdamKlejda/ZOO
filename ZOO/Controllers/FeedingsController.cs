@@ -55,7 +55,6 @@ namespace ZOO.Controllers
         {
             ViewBag.Exception = null;
             string msg = null;
-            FeedingReminderAccess feedingReminderAccess = new FeedingReminderAccess();
             if (ModelState.IsValid)
             {
 
@@ -66,14 +65,13 @@ namespace ZOO.Controllers
 
                     FoodProducts foodProducts = db.FoodProducts.Single(c => c.FoodProductsId == feedings.FoodProductsId);
                     foodProducts.Quantity = foodProducts.Quantity-feedings.Quantity ?? default(int) ;
-                    feedingReminderAccess.Create(new FeedingReminder(feedings.FeedingId, feedings.FeedingDate.ToString(), 0));
                     db.SaveChanges();
                         
                 }
                 catch (Exception e)
                 {
                     
-                    msg = "Unable to create such feeding, we have no more such food products";
+                    msg = e.InnerException.InnerException.Message;
                     
                     ViewBag.Exception = msg;
                     ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
