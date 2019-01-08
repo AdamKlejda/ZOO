@@ -94,9 +94,6 @@ namespace ZOO.Controllers
             if (ModelState.IsValid)
             {
                 db.Delivery.Add(delivery);
-
-                FoodProducts foodProducts = db.FoodProducts.Single(c => c.FoodProductsId == delivery.FoodProductsId);
-                foodProducts.Quantity = foodProducts.Quantity + delivery.Quantity;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
