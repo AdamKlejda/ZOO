@@ -182,6 +182,7 @@
     <Compile Include="Controllers\DeliveriesController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FeedingReminderController.cs" />
     <Compile Include="Controllers\FeedingsController.cs" />
     <Compile Include="Controllers\FoodProductsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -198,7 +199,7 @@
     <Compile Include="Models\Animals.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\FeedingReminder.cs" />
     <Compile Include="Models\Cleanings.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
@@ -208,6 +209,7 @@
     <Compile Include="Models\Employees.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FeedingReminderAccess.cs" />
     <Compile Include="Models\Feedings.cs">
       <DependentUpon>ZOO.tt</DependentUpon>
     </Compile>
