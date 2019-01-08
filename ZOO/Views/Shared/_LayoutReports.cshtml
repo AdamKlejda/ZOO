@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<body style="background-color:white;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Employees", "Index", "Employees", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Animal Groups", "Index", "AnimalGroups", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Works", "Index", "Works", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Deliveries", "Index", "Deliveries", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Pavilions", "Index", "Pavilions", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("Reports", "Index", "Report", new { area = "" }, null)</li>                    
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @if(ViewBag.Exception == null){}
+        else{
+        <h3><font color="red">DB Server Exception</font></h3>
+        <h5><font color="red">@ViewBag.Exception</font></h5>
+        }
+        <div>
+            <h2>Reports</h2>
+
+            <ul class="nav navbar-nav">
+                <li>@Html.ActionLink("Report1", "ReportEmployee", "Report", new { id = "1" }, null)</li>
+                <li>@Html.ActionLink("Report2", "Report2", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Report3", "Report3", "Report", new { area = "" }, null)</li>
+                <li>@Html.ActionLink("Report4", "Report4", "Report", new { area = "" }, null)</li>
+
+            </ul>
+        </div>
+        @RenderBody()
+        <br />
+        <br />
+        <hr />
+        
+        <div>
+            <footer>
+                <p>&copy; @DateTime.Now.Year — Open Beta Version 1.0.5</p>
+            </footer>
+        </div>
+      
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
