@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ZOO.Models.Feedings>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>FeedingReminders</h2>
+
+<table class="table" style="background-color:white;">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimeForFeeding)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FeedingDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AnimalGroups.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employees.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FoodProducts.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeForFeeding)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FeedingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AnimalGroups.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Employees.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FoodProducts.Name)
+            </td>
+            <td>
+                @Html.ActionLink("MarkAsShown", "MarkAsShown", new { id = item.FeedingId })
+            </td>
+        </tr>
+
+    }
+
+</table>
