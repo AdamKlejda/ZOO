@@ -13,7 +13,6 @@ namespace ZOO.Controllers
     public class ReportEmployeeViewModel
     {
         public Employees employee { get; set; }
-        public List<Employees> employees { get; set; }
         public List<Cleanings> cleanings { get; set; }
         public List<Feedings> feedings { get; set; }
 
@@ -94,16 +93,6 @@ namespace ZOO.Controllers
                     ViewBag.Exception = msg;
                 }
             }
-            var empolyees = from c in db.Employees
-                            select c;
-            List<Employees> empl = new List<Employees>();
-            foreach (var e in empolyees)
-            {
-
-                empl.Add(e);
-            }
-            data.employees = empl;
-
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName");
 
             return View(data);
