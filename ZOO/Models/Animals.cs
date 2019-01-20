@@ -21,6 +21,7 @@ namespace ZOO.Models
         public System.DateTime BirthDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
         public string Sex { get; set; }
+        public int RowVersion { get; set; }
     
         public virtual AnimalGroups AnimalGroups { get; set; }
     }

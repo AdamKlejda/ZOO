@@ -19,6 +19,7 @@ namespace ZOO.Models
         public int PavilionId { get; set; }
         public System.DateTime CleaningDate { get; set; }
         public int TimeForCleaning { get; set; }
+        public int RowVersion { get; set; }
     
         public virtual Employees Employees { get; set; }
         public virtual Pavilions Pavilions { get; set; }

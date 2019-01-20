@@ -134,12 +134,47 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AnimalGroupId,PavilionId,Name")] AnimalGroups animalGroups)
+        public ActionResult Edit([Bind(Include = "AnimalGroupId,PavilionId,Name,RowVersion")] AnimalGroups animalGroups)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(animalGroups).State = EntityState.Modified;
-                db.SaveChanges();
+                var entity = db.AnimalGroups.Single(p => p.AnimalGroupId == animalGroups.AnimalGroupId);
+
+                if (entity.RowVersion != animalGroups.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+
+                }
+
+                entity.RowVersion++;
+                entity.PavilionId = animalGroups.PavilionId;
+                entity.Name = animalGroups.Name;
+
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(animalGroups);
+
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.PavilionId = new SelectList(db.Pavilions, "PavilionId", "Name", animalGroups.PavilionId);

@@ -24,6 +24,7 @@ namespace ZOO.Models
         public int PavilionId { get; set; }
         public Nullable<int> Surface { get; set; }
         public string Name { get; set; }
+        public int RowVersion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AnimalGroups> AnimalGroups { get; set; }

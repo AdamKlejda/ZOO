@@ -36,10 +36,18 @@
         </div>
     </div>
     <div class="container body-content">
-        @if(ViewBag.Exception == null){}
-        else{
-        <h3><font color="red">DB Server Exception</font></h3>
-        <h5><font color="red">@ViewBag.Exception</font></h5>
+        @if (ViewBag.Exception == null)
+        {
+            if (TempData["Exception"] != null)
+            {
+                <h3><font color="red">DB Server Exception</font></h3>
+                <h5><font color="red">@TempData["Exception"]</font></h5>
+            }
+        }
+        else
+        {
+            <h3><font color="red">DB Server Exception</font></h3>
+            <h5><font color="red">@ViewBag.Exception</font></h5>
         }
         @RenderBody()
         <hr />

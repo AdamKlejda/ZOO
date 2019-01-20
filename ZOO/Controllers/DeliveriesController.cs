@@ -128,12 +128,50 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "DeliveryId,SupplierId,FoodProductsId,DeliveryDate,Quantity")] Delivery delivery)
+        public ActionResult Edit([Bind(Include = "DeliveryId,SupplierId,FoodProductsId,DeliveryDate,Quantity,RowVersion")] Delivery delivery)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(delivery).State = EntityState.Modified;
-                db.SaveChanges();
+
+                var entity = db.Delivery.Single(p => p.DeliveryId == delivery.DeliveryId);
+
+                if (entity.RowVersion != delivery.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+
+                }
+
+                entity.RowVersion++;
+                entity.SupplierId = delivery.SupplierId;
+                entity.FoodProductsId = delivery.FoodProductsId;
+                entity.DeliveryDate = delivery.DeliveryDate;
+                entity.Quantity = delivery.Quantity;
+
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(delivery);
+
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.FoodProductsId = new SelectList(db.FoodProducts, "FoodProductsId", "Name", delivery.FoodProductsId);

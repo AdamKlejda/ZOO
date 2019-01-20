@@ -78,12 +78,49 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FoodProductsId,Name,Quantity,ExpiryDate,Calories")] FoodProducts foodProducts)
+        public ActionResult Edit([Bind(Include = "FoodProductsId,Name,Quantity,ExpiryDate,Calories,RowVersion")] FoodProducts foodProducts)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(foodProducts).State = EntityState.Modified;
-                db.SaveChanges();
+
+                var entity = db.FoodProducts.Single(p => p.FoodProductsId == foodProducts.FoodProductsId);
+
+                if (entity.RowVersion != foodProducts.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+
+
+                entity.RowVersion++;
+                entity.Name = foodProducts.Name;
+                entity.Quantity = foodProducts.Quantity;
+                entity.ExpiryDate = foodProducts.ExpiryDate;
+                entity.Calories = foodProducts.Calories;
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(foodProducts);
+
+                }
                 return RedirectToAction("Index");
             }
             return View(foodProducts);

@@ -12,6 +12,7 @@
           <Property Name="AnimalGroupId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PavilionId" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Animals">
           <Key>
@@ -24,6 +25,7 @@
           <Property Name="BirthDate" Type="date" Nullable="false" />
           <Property Name="DeathDate" Type="date" />
           <Property Name="Sex" Type="varchar" MaxLength="1" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Cleanings">
           <Key>
@@ -34,6 +36,7 @@
           <Property Name="PavilionId" Type="int" Nullable="false" />
           <Property Name="CleaningDate" Type="date" Nullable="false" />
           <Property Name="TimeForCleaning" Type="int" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -44,6 +47,7 @@
           <Property Name="FoodProductsId" Type="int" Nullable="false" />
           <Property Name="DeliveryDate" Type="date" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -56,6 +60,7 @@
           <Property Name="Position" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="login" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Feedings">
           <Key>
@@ -68,6 +73,7 @@
           <Property Name="TimeForFeeding" Type="int" Nullable="false" />
           <Property Name="FeedingDate" Type="date" Nullable="false" />
           <Property Name="Quantity" Type="int" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="FoodProducts">
           <Key>
@@ -78,6 +84,7 @@
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="ExpiryDate" Type="date" Nullable="false" />
           <Property Name="Calories" Type="int" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Pavilions">
           <Key>
@@ -86,6 +93,7 @@
           <Property Name="PavilionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Surface" Type="int" />
           <Property Name="Name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
@@ -98,9 +106,10 @@
           <Property Name="City" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Country" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="RowVersion" Type="int" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZOO.MDF.dbo.BusiestEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MDF.dbo.BusiestEmployees' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="BusiestEmployees">
           <Key>
             <PropertyRef Name="EmployeeId" />
@@ -291,6 +300,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <NavigationProperty Name="Pavilions" Relationship="Self.FK__AnimalGro__Pavil__489AC854" FromRole="AnimalGroups" ToRole="Pavilions" />
           <NavigationProperty Name="Animals" Relationship="Self.FK__Animals__AnimalG__498EEC8D" FromRole="AnimalGroups" ToRole="Animals" />
           <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__Animal__4E53A1AA" FromRole="AnimalGroups" ToRole="Feedings" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Animals">
           <Key>
@@ -304,6 +314,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="DeathDate" Type="DateTime" Precision="0" />
           <Property Name="Sex" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__Animals__AnimalG__498EEC8D" FromRole="Animals" ToRole="AnimalGroups" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Cleanings">
           <Key>
@@ -316,6 +327,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="TimeForCleaning" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Cleanings__Emplo__4A8310C6" FromRole="Cleanings" ToRole="Employees" />
           <NavigationProperty Name="Pavilions" Relationship="Self.FK__Cleanings__Pavil__4B7734FF" FromRole="Cleanings" ToRole="Pavilions" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Delivery">
           <Key>
@@ -328,6 +340,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FoodProducts" Relationship="Self.FK__Delivery__FoodPr__4C6B5938" FromRole="Delivery" ToRole="FoodProducts" />
           <NavigationProperty Name="Suppliers" Relationship="Self.FK__Delivery__Suppli__4D5F7D71" FromRole="Delivery" ToRole="Suppliers" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Employees">
           <Key>
@@ -342,6 +355,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleanings__Emplo__4A8310C6" FromRole="Employees" ToRole="Cleanings" />
           <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__Employ__4F47C5E3" FromRole="Employees" ToRole="Feedings" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Feedings">
           <Key>
@@ -357,6 +371,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__Feedings__Animal__4E53A1AA" FromRole="Feedings" ToRole="AnimalGroups" />
           <NavigationProperty Name="Employees" Relationship="Self.FK__Feedings__Employ__4F47C5E3" FromRole="Feedings" ToRole="Employees" />
           <NavigationProperty Name="FoodProducts" Relationship="Self.FK__Feedings__FoodPr__503BEA1C" FromRole="Feedings" ToRole="FoodProducts" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="FoodProducts">
           <Key>
@@ -369,6 +384,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="Calories" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Delivery" Relationship="Self.FK__Delivery__FoodPr__4C6B5938" FromRole="FoodProducts" ToRole="Delivery" />
           <NavigationProperty Name="Feedings" Relationship="Self.FK__Feedings__FoodPr__503BEA1C" FromRole="FoodProducts" ToRole="Feedings" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Pavilions">
           <Key>
@@ -379,6 +395,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="AnimalGroups" Relationship="Self.FK__AnimalGro__Pavil__489AC854" FromRole="Pavilions" ToRole="AnimalGroups" />
           <NavigationProperty Name="Cleanings" Relationship="Self.FK__Cleanings__Pavil__4B7734FF" FromRole="Pavilions" ToRole="Cleanings" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="Suppliers">
           <Key>
@@ -392,6 +409,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <Property Name="Country" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Delivery" Relationship="Self.FK__Delivery__Suppli__4D5F7D71" FromRole="Suppliers" ToRole="Delivery" />
+          <Property Name="RowVersion" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK__AnimalGro__Pavil__489AC854">
           <End Role="Pavilions" Type="Self.Pavilions" Multiplicity="1" />
@@ -583,6 +601,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="AnimalGroups">
             <EntityTypeMapping TypeName="ZOOModel.AnimalGroups">
               <MappingFragment StoreEntitySet="AnimalGroups">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
                 <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -592,6 +611,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Animals">
             <EntityTypeMapping TypeName="ZOOModel.Animals">
               <MappingFragment StoreEntitySet="Animals">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="AnimalId" ColumnName="AnimalId" />
                 <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -605,6 +625,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Cleanings">
             <EntityTypeMapping TypeName="ZOOModel.Cleanings">
               <MappingFragment StoreEntitySet="Cleanings">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="CleaningId" ColumnName="CleaningId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
@@ -616,6 +637,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Delivery">
             <EntityTypeMapping TypeName="ZOOModel.Delivery">
               <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="DeliveryId" ColumnName="DeliveryId" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
@@ -627,6 +649,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="ZOOModel.Employees">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -640,6 +663,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Feedings">
             <EntityTypeMapping TypeName="ZOOModel.Feedings">
               <MappingFragment StoreEntitySet="Feedings">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="FeedingId" ColumnName="FeedingId" />
                 <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
@@ -653,6 +677,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="FoodProducts">
             <EntityTypeMapping TypeName="ZOOModel.FoodProducts">
               <MappingFragment StoreEntitySet="FoodProducts">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
@@ -664,6 +689,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Pavilions">
             <EntityTypeMapping TypeName="ZOOModel.Pavilions">
               <MappingFragment StoreEntitySet="Pavilions">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="PavilionId" ColumnName="PavilionId" />
                 <ScalarProperty Name="Surface" ColumnName="Surface" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -673,6 +699,7 @@ warning 6002: The table/view 'D:\USERS\ADAM\DOCUMENTS\GITHUB\ZOO\ZOO\APP_DATA\ZO
           <EntitySetMapping Name="Suppliers">
             <EntityTypeMapping TypeName="ZOOModel.Suppliers">
               <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="RowVersion" ColumnName="RowVersion" />
                 <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />

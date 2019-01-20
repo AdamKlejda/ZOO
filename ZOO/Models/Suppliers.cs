@@ -27,6 +27,7 @@ namespace ZOO.Models
         public string City { get; set; }
         public string Country { get; set; }
         public string Phone { get; set; }
+        public int RowVersion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Delivery> Delivery { get; set; }

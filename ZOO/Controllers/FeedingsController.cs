@@ -116,12 +116,47 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate")] Feedings feedings)
+        public ActionResult Edit([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate,RowVersion")] Feedings feedings)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(feedings).State = EntityState.Modified;
-                db.SaveChanges();
+                var entity = db.Feedings.Single(p => p.FeedingId == feedings.FeedingId);
+
+                if (entity.RowVersion != feedings.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+                entity.RowVersion++;
+                entity.AnimalGroupId = feedings.AnimalGroupId;
+                entity.EmployeeId = feedings.EmployeeId;
+                entity.FoodProducts = feedings.FoodProducts;
+                entity.TimeForFeeding = feedings.TimeForFeeding;
+                entity.FeedingDate = feedings.FeedingDate;
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(feedings);
+
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name", feedings.AnimalGroupId);

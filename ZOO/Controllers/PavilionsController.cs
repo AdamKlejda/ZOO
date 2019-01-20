@@ -141,12 +141,46 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PavilionId,Surface,Name")] Pavilions pavilions)
+        public ActionResult Edit([Bind(Include = "PavilionId,Surface,Name,RowVersion")] Pavilions pavilions)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(pavilions).State = EntityState.Modified;
-                db.SaveChanges();
+
+                var entity = db.Pavilions.Single(p => p.PavilionId == pavilions.PavilionId);
+
+                if (entity.RowVersion != pavilions.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+
+                entity.RowVersion++;
+                entity.Surface = pavilions.Surface;
+                entity.Name = pavilions.Name;
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(pavilions);
+
+                }
                 return RedirectToAction("Index");
             }
             return View(pavilions);

@@ -106,12 +106,48 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "CleaningId,EmployeeId,PavilionId,CleaningDate,TimeForCleaning")] Cleanings cleanings)
+        public ActionResult Edit([Bind(Include = "CleaningId,EmployeeId,PavilionId,CleaningDate,TimeForCleaning,RowVersion")] Cleanings cleanings)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(cleanings).State = EntityState.Modified;
-                db.SaveChanges();
+                var entity = db.Cleanings.Single(p => p.CleaningId == cleanings.CleaningId);
+
+                if (entity.RowVersion != cleanings.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+
+                entity.RowVersion++;
+                entity.EmployeeId = cleanings.EmployeeId;
+                entity.PavilionId = cleanings.PavilionId;
+                entity.CleaningDate = cleanings.CleaningDate;
+                entity.TimeForCleaning = cleanings.TimeForCleaning;
+
+                db.Entry(entity).State = EntityState.Modified;
+
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(cleanings);
+
+                }
                 return RedirectToAction("Index");
             }
             ViewBag.EmployeeId = new SelectList(db.Employees, "EmployeeId", "FirstName", cleanings.EmployeeId);

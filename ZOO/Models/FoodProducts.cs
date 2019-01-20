@@ -26,6 +26,7 @@ namespace ZOO.Models
         public int Quantity { get; set; }
         public System.DateTime ExpiryDate { get; set; }
         public int Calories { get; set; }
+        public int RowVersion { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Delivery> Delivery { get; set; }

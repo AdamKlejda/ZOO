@@ -139,13 +139,55 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "EmployeeId,FirstName,LastName,Salary,Position,login,password")] Employees employees)
+        public ActionResult Edit([Bind(Include = "EmployeeId,FirstName,LastName,Salary,Position,login,password,RowVersion")] Employees employees)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
-                db.Entry(employees).State = EntityState.Modified;
-                db.SaveChanges();
+                var entity = db.Employees.Single(p => p.EmployeeId == employees.EmployeeId);
+
+                if(entity.RowVersion != employees.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+
+                entity.RowVersion++;
+                entity.FirstName = employees.FirstName;
+                entity.LastName = employees.LastName;
+                entity.Salary = employees.Salary;
+                entity.Position = employees.Position;
+                entity.login = employees.login;
+                entity.password = employees.password;
+                
+
+
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch(Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(employees);
+
+                }
                 return RedirectToAction("Index");
+
+
             }
             return View(employees);
         }

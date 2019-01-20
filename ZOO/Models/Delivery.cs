@@ -19,6 +19,7 @@ namespace ZOO.Models
         public int FoodProductsId { get; set; }
         public System.DateTime DeliveryDate { get; set; }
         public int Quantity { get; set; }
+        public int RowVersion { get; set; }
     
         public virtual FoodProducts FoodProducts { get; set; }
         public virtual Suppliers Suppliers { get; set; }

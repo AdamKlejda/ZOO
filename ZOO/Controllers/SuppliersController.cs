@@ -103,12 +103,49 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "SupplierId,CompanyName,ContactName,Address,City,Country,Phone")] Suppliers suppliers)
+        public ActionResult Edit([Bind(Include = "SupplierId,CompanyName,ContactName,Address,City,Country,Phone,RowVersion")] Suppliers suppliers)
         {
+            ViewBag.Exception = null;
+            string msg = null;
             if (ModelState.IsValid)
             {
-                db.Entry(suppliers).State = EntityState.Modified;
-                db.SaveChanges();
+                var entity = db.Suppliers.Single(p => p.SupplierId == suppliers.SupplierId);
+
+                if (entity.RowVersion != suppliers.RowVersion)
+                {
+                    TempData["Exception"] = "Entity was modified by another user. Check values and perform edit action again";
+                    return RedirectToAction("Edit");
+                }
+
+
+                entity.RowVersion++;
+                entity.CompanyName = suppliers.CompanyName;
+                entity.ContactName = suppliers.ContactName;
+                entity.Address = suppliers.Address;
+                entity.City = suppliers.City;
+                entity.Country = suppliers.Country;
+                entity.Phone = suppliers.Phone;
+
+                db.Entry(entity).State = EntityState.Modified;
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(suppliers);
+
+                }
                 return RedirectToAction("Index");
             }
             return View(suppliers);

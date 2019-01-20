@@ -21,6 +21,7 @@ namespace ZOO.Models
         public int TimeForFeeding { get; set; }
         public System.DateTime FeedingDate { get; set; }
         public Nullable<int> Quantity { get; set; }
+        public int RowVersion { get; set; }
     
         public virtual AnimalGroups AnimalGroups { get; set; }
         public virtual Employees Employees { get; set; }
