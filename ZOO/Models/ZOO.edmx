@@ -113,8 +113,12 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
         <EntityType Name="BusiestEmployees">
           <Key>
             <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
           </Key>
           <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="LastName" Type="varchar" MaxLength="255" Nullable="false" />
           <Property Name="Appearances" Type="int" />
         </EntityType>
         <Association Name="FK__AnimalGro__Pavil__489AC854">
@@ -246,6 +250,8 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
           <EntitySet Name="BusiestEmployees" EntityType="Self.BusiestEmployees" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [BusiestEmployees].[EmployeeId] AS [EmployeeId], 
+    [BusiestEmployees].[FirstName] AS [FirstName], 
+    [BusiestEmployees].[LastName] AS [LastName], 
     [BusiestEmployees].[Appearances] AS [Appearances]
     FROM [dbo].[BusiestEmployees] AS [BusiestEmployees]</DefiningQuery>
           </EntitySet>
@@ -565,7 +571,6 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
             <End Role="FoodProducts" EntitySet="FoodProducts" />
             <End Role="Feedings" EntitySet="Feedings" />
           </AssociationSet>
-          <EntitySet Name="BusiestEmployees" EntityType="ZOOModel.BusiestEmployees" />
           <FunctionImport Name="Calories_per_Group" ReturnType="Collection(ZOOModel.Calories_per_Group_Result)">
             <Parameter Name="start" Mode="In" Type="DateTime" />
             <Parameter Name="stop" Mode="In" Type="DateTime" />
@@ -574,14 +579,16 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
             <Parameter Name="start" Mode="In" Type="DateTime" />
             <Parameter Name="stop" Mode="In" Type="DateTime" />
           </FunctionImport>
+          <FunctionImport Name="Calories_per_Group1" ReturnType="Collection(ZOOModel.Calories_per_Group1_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="stop" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="Food_Report1" ReturnType="Collection(ZOOModel.Food_Report1_Result)">
+            <Parameter Name="start" Mode="In" Type="DateTime" />
+            <Parameter Name="stop" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="BusiestEmployees" EntityType="ZOOModel.BusiestEmployees" />
         </EntityContainer>
-        <EntityType Name="BusiestEmployees">
-          <Key>
-            <PropertyRef Name="EmployeeId" />
-          </Key>
-          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
-          <Property Name="Appearances" Type="Int32" />
-        </EntityType>
         <ComplexType Name="Calories_per_Group_Result">
           <Property Type="Int32" Name="AnimalGroupId" Nullable="false" />
           <Property Type="Int32" Name="Eaten" Nullable="true" />
@@ -592,6 +599,27 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
           <Property Type="Int32" Name="Bought" Nullable="true" />
           <Property Type="Int32" Name="Balance" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="Calories_per_Group1_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Eaten" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Food_Report1_Result">
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="255" />
+          <Property Type="Int32" Name="Eaten" Nullable="true" />
+          <Property Type="Int32" Name="Bought" Nullable="true" />
+          <Property Type="Int32" Name="Balance" Nullable="true" />
+        </ComplexType>
+        <EntityType Name="BusiestEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+            <PropertyRef Name="FirstName" />
+            <PropertyRef Name="LastName" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Appearances" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -710,33 +738,35 @@ warning 6002: The table/view 'C:\USERS\ADAM\SOURCE\REPOS\ZOO\ZOO\APP_DATA\ZOO.MD
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="BusiestEmployees">
-            <EntityTypeMapping TypeName="ZOOModel.BusiestEmployees">
-              <MappingFragment StoreEntitySet="BusiestEmployees">
-                <ScalarProperty Name="Appearances" ColumnName="Appearances" />
-                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Calories_per_Group" FunctionName="ZOOModel.Store.Calories_per_Group">
+          <FunctionImportMapping FunctionImportName="Calories_per_Group1" FunctionName="ZOOModel.Store.Calories_per_Group">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ZOOModel.Calories_per_Group_Result">
-                <ScalarProperty Name="AnimalGroupId" ColumnName="AnimalGroupId" />
+              <ComplexTypeMapping TypeName="ZOOModel.Calories_per_Group1_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Eaten" ColumnName="Eaten" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="Food_Report" FunctionName="ZOOModel.Store.Food_Report">
+          <FunctionImportMapping FunctionImportName="Food_Report1" FunctionName="ZOOModel.Store.Food_Report">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="ZOOModel.Food_Report_Result">
-                <ScalarProperty Name="FoodProductsId" ColumnName="FoodProductsId" />
+              <ComplexTypeMapping TypeName="ZOOModel.Food_Report1_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Eaten" ColumnName="Eaten" />
                 <ScalarProperty Name="Bought" ColumnName="Bought" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="BusiestEmployees">
+            <EntityTypeMapping TypeName="ZOOModel.BusiestEmployees">
+              <MappingFragment StoreEntitySet="BusiestEmployees">
+                <ScalarProperty Name="Appearances" ColumnName="Appearances" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -10,13 +10,12 @@
 namespace ZOO.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class BusiestEmployees
+    public partial class Food_Report1_Result
     {
-        public int EmployeeId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public Nullable<int> Appearances { get; set; }
+        public string Name { get; set; }
+        public Nullable<int> Eaten { get; set; }
+        public Nullable<int> Bought { get; set; }
+        public Nullable<int> Balance { get; set; }
     }
 }

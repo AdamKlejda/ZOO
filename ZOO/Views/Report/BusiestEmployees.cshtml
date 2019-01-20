@@ -10,33 +10,41 @@
 <h2>BusiestEmployees</h2>
 
 <table class="table" border="1" style="background-color:white;">
-<tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ElementAt(0).EmployeeId)
-            </th>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).LastName)
+        </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.ElementAt(0).Appearances)
-            </th>
-    <th></th>
-           
-</tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ElementAt(0).Appearances)
+        </th>
+        <th>
+        </th>
+
+    </tr>
 
 @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmployeeId)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Appearances)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Employees", new { id = item.EmployeeId }, null) |
-                    @Html.ActionLink("Details", "Details", "Employees", new { id = item.EmployeeId }, null) 
-                </td>
-            </tr>
-        }
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Appearances)
+        </td>
+        <td>
+       
+            @Html.ActionLink("Edit", "Details", "Employees", new { id = item.EmployeeId }, null) |
+            @Html.ActionLink("Details", "Edit", "Employees", new { id = item.EmployeeId }, null)
+        </td>
+    </tr>
+}
   </table>
 
 

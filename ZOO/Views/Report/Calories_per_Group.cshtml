@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ZOO.Models.Calories_per_Group_Result>
+﻿@model IEnumerable<ZOO.Models.Calories_per_Group1_Result>
 
 @{
     ViewBag.Title = "Calories_per_Group";
@@ -41,10 +41,9 @@
 
 <div class="form-group">
     <div class="col-md-offset-2 col-md-10">
-        <input type="submit" value="Generate" class="btn btn-default" />
+        <li>@Html.ActionLink("Calories Report", "Calories_per_Group", "Report", new { datefrom = DateFrom, dateTo = DateTo }, null)</li>
     </div>
-</div>
-
+</div
 <br />
 <br />
 <br />
@@ -57,7 +56,7 @@
 <table class="table" border="1" style="background-color:white;">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ElementAt(0).AnimalGroupId)
+            @Html.DisplayNameFor(model => model.ElementAt(0).Name)
         </th>
 
         <th>
@@ -72,7 +71,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.AnimalGroupId)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Eaten)

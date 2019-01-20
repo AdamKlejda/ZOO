@@ -63,5 +63,31 @@ namespace ZOO.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Food_Report_Result>("Food_Report", startParameter, stopParameter);
         }
+    
+        public virtual ObjectResult<Calories_per_Group1_Result> Calories_per_Group1(Nullable<System.DateTime> start, Nullable<System.DateTime> stop)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var stopParameter = stop.HasValue ?
+                new ObjectParameter("stop", stop) :
+                new ObjectParameter("stop", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Calories_per_Group1_Result>("Calories_per_Group1", startParameter, stopParameter);
+        }
+    
+        public virtual ObjectResult<Food_Report1_Result> Food_Report1(Nullable<System.DateTime> start, Nullable<System.DateTime> stop)
+        {
+            var startParameter = start.HasValue ?
+                new ObjectParameter("start", start) :
+                new ObjectParameter("start", typeof(System.DateTime));
+    
+            var stopParameter = stop.HasValue ?
+                new ObjectParameter("stop", stop) :
+                new ObjectParameter("stop", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Food_Report1_Result>("Food_Report1", startParameter, stopParameter);
+        }
     }
 }

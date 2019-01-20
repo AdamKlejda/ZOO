@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ZOO.Models.Food_Report_Result>
+﻿@model IEnumerable<ZOO.Models.Food_Report1_Result>
 
 @{
     ViewBag.Title = "Food_Report";
@@ -60,7 +60,7 @@
 <table class="table" border="1" style="background-color:white;">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ElementAt(0).FoodProductsId)
+            @Html.DisplayNameFor(model => model.ElementAt(0).Name)
         </th>
 
         <th>
@@ -81,7 +81,7 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FoodProductsId)
+                @Html.DisplayFor(modelItem => item.Name)
 
             </td>
             <td>

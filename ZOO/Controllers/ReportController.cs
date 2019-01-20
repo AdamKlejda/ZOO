@@ -111,14 +111,14 @@ namespace ZOO.Controllers
         public ActionResult Food_Report(DateTime datefrom, DateTime dateTo)
         {
             ViewBag.FoodProductsId = new SelectList(db.FoodProducts, "FoodProductsId", "Name");
-            var food = db.Food_Report(datefrom, dateTo);
+            var food = db.Food_Report1(datefrom, dateTo);
             return View(food);
         }
 
         public ActionResult Calories_per_Group(DateTime datefrom, DateTime dateTo)
         {
             ViewBag.AnimalGroupId = new SelectList(db.AnimalGroups, "AnimalGroupId", "Name");
-            var callories = db.Calories_per_Group(datefrom, dateTo);
+            var callories = db.Calories_per_Group1(datefrom, dateTo);
             return View(callories);
         }
     }
