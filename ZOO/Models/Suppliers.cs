@@ -42,9 +42,10 @@ namespace ZOO.Models
         [MinLength(3, ErrorMessage = "Minimal length of the country is 3 characters")]
         [MaxLength(20, ErrorMessage = "Maximum length of the name is 20 characters")]
         public string Country { get; set; }
-        [Required(ErrorMessage = "The phone is required")]
-        [MinLength(3, ErrorMessage = "Minimal length of the phone is 3 characters")]
-        [MaxLength(20, ErrorMessage = "Maximum length of the phone is 20 characters")]
+        [Required(ErrorMessage = "Phone is a Required field.")]
+        [RegularExpression("\\+[0-9]{2}-[0-9]{3}-[0-9]{3}-[0-9]{3}",
+                ErrorMessage = "Phone is required and must be properly formatted.")]
+        [Display(Order = 9, Name = "Phone")]
         public string Phone { get; set; }
         public int RowVersion { get; set; }
     

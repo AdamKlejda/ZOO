@@ -65,7 +65,7 @@ namespace ZOO.Controllers
                     if(e.InnerException == null)
                     {
                         
-                        msg = "Niepoprawne dane zwierzęcia";
+                        msg = "Incorrect animal data";
                         
                         
                     }
@@ -142,7 +142,7 @@ namespace ZOO.Controllers
                     if (e.InnerException == null)
                     {
 
-                        msg = "Niepoprawne dane zwierzęcia";
+                        msg = "incorrect animal data";
 
 
                     }

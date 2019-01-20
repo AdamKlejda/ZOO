@@ -29,6 +29,8 @@ namespace ZOO.Models
         public System.DateTime BirthDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
         [Required(ErrorMessage = "The sex is required")]
+        [RegularExpression("m|f",
+                ErrorMessage = "Sex should be m or f")]
         public string Sex { get; set; }
         public int RowVersion { get; set; }
     
