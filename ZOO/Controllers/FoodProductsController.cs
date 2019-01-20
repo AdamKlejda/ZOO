@@ -48,10 +48,30 @@ namespace ZOO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Name,Quantity,ExpiryDate,Calories")] FoodProducts foodProducts)
         {
+            ViewBag.Exception = null;
+            string msg = null;
             if (ModelState.IsValid)
             {
                 db.FoodProducts.Add(foodProducts);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(foodProducts);
+
+                }
                 return RedirectToAction("Index");
             }
 

@@ -111,10 +111,31 @@ namespace ZOO.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Surface,Name")] Pavilions pavilions)
         {
+            ViewBag.Exception = null;
+            string msg = null;
+
             if (ModelState.IsValid)
             {
                 db.Pavilions.Add(pavilions);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(pavilions);
+
+                }
                 return RedirectToAction("Index");
             }
 

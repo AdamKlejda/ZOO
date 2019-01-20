@@ -72,11 +72,32 @@ namespace ZOO.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "CompanyName,ContactName,Address,City,Country,Phone")] Suppliers suppliers)
-        {
+        { 
+
+            ViewBag.Exception = null;
+            string msg = null;
             if (ModelState.IsValid)
             {
                 db.Suppliers.Add(suppliers);
-                db.SaveChanges();
+                try
+                {
+                    db.SaveChanges();
+
+                }
+                catch (Exception e)
+                {
+                    if (e.InnerException == null)
+                    {
+                        msg = e.Message;
+                    }
+                    else
+                        msg = e.InnerException.InnerException.Message;
+
+                    ViewBag.Exception = msg;
+
+                    return View(suppliers);
+
+                }
                 return RedirectToAction("Index");
             }
 
