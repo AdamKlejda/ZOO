@@ -51,7 +51,7 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FeedingId,AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate,Quantity")] Feedings feedings)
+        public ActionResult Create([Bind(Include = "AnimalGroupId,EmployeeId,FoodProductsId,TimeForFeeding,FeedingDate,Quantity")] Feedings feedings)
         {
             ViewBag.Exception = null;
             string msg = null;

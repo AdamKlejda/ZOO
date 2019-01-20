@@ -89,7 +89,7 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "DeliveryId,SupplierId,FoodProductsId,DeliveryDate,Quantity")] Delivery delivery)
+        public ActionResult Create([Bind(Include = "SupplierId,FoodProductsId,DeliveryDate,Quantity")] Delivery delivery)
         {
             if (ModelState.IsValid)
             {

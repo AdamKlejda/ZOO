@@ -46,7 +46,7 @@ namespace ZOO.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FoodProductsId,Name,Quantity,ExpiryDate,Calories")] FoodProducts foodProducts)
+        public ActionResult Create([Bind(Include = "Name,Quantity,ExpiryDate,Calories")] FoodProducts foodProducts)
         {
             if (ModelState.IsValid)
             {
