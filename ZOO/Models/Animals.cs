@@ -11,15 +11,24 @@ namespace ZOO.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Animals
     {
         public int AnimalId { get; set; }
         public int AnimalGroupId { get; set; }
+        [Required(ErrorMessage = "The name is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the name is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the name is 20 characters")]
         public string Name { get; set; }
+        [Required(ErrorMessage = "The species are required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the species is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the species is 20 characters")]
         public string Species { get; set; }
+        [Required(ErrorMessage = "The birth date is required")]
         public System.DateTime BirthDate { get; set; }
         public Nullable<System.DateTime> DeathDate { get; set; }
+        [Required(ErrorMessage = "The sex is required")]
         public string Sex { get; set; }
         public int RowVersion { get; set; }
     

@@ -11,13 +11,16 @@ namespace ZOO.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Cleanings
     {
         public int CleaningId { get; set; }
         public int EmployeeId { get; set; }
         public int PavilionId { get; set; }
+        [Required(ErrorMessage = "The date is required")]
         public System.DateTime CleaningDate { get; set; }
+        [Required(ErrorMessage = "Time for cleaning is required")]
         public int TimeForCleaning { get; set; }
         public int RowVersion { get; set; }
     

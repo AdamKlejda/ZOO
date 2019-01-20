@@ -11,7 +11,8 @@ namespace ZOO.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class AnimalGroups
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +24,9 @@ namespace ZOO.Models
     
         public int AnimalGroupId { get; set; }
         public int PavilionId { get; set; }
+        [Required(ErrorMessage ="The name is required")]
+        [MinLength(3,ErrorMessage ="Minimal length of the name is 3 characters")]
+        [MaxLength(20, ErrorMessage ="Maximum length of the name is 20 characters")]
         public string Name { get; set; }
         public int RowVersion { get; set; }
     

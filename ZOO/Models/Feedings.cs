@@ -11,15 +11,19 @@ namespace ZOO.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Feedings
     {
         public int FeedingId { get; set; }
         public int AnimalGroupId { get; set; }
         public int EmployeeId { get; set; }
         public int FoodProductsId { get; set; }
+        [Required(ErrorMessage = "The time for feeding is required")]
         public int TimeForFeeding { get; set; }
+        [Required(ErrorMessage = "The feeding date is required")]
         public System.DateTime FeedingDate { get; set; }
+        [Required(ErrorMessage = "The quantity is required")]
         public Nullable<int> Quantity { get; set; }
         public int RowVersion { get; set; }
     

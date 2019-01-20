@@ -11,7 +11,8 @@ namespace ZOO.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Suppliers
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,11 +22,29 @@ namespace ZOO.Models
         }
     
         public int SupplierId { get; set; }
+        [Required(ErrorMessage = "The company name is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the company name is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the company name is 20 characters")]
         public string CompanyName { get; set; }
+        [Required(ErrorMessage = "The contact name is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the contact name is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the contact name is 20 characters")]
         public string ContactName { get; set; }
+        [Required(ErrorMessage = "The address is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the address is 3 characters")]
+        [MaxLength(100, ErrorMessage = "Maximum length of the address is 100 characters")]
         public string Address { get; set; }
+        [Required(ErrorMessage = "The city is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the city is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the city is 20 characters")]
         public string City { get; set; }
+        [Required(ErrorMessage = "The country is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the country is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the name is 20 characters")]
         public string Country { get; set; }
+        [Required(ErrorMessage = "The phone is required")]
+        [MinLength(3, ErrorMessage = "Minimal length of the phone is 3 characters")]
+        [MaxLength(20, ErrorMessage = "Maximum length of the phone is 20 characters")]
         public string Phone { get; set; }
         public int RowVersion { get; set; }
     
